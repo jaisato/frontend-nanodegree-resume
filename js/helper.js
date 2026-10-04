@@ -189,6 +189,11 @@ function initializeMap() {
   function callback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       createMapMarker(results[0]);
+    } else {
+      // Any other status (ZERO_RESULTS, REQUEST_DENIED for a missing or
+      // restricted API key, OVER_QUERY_LIMIT...) used to be dropped silently,
+      // leaving an empty map with no clue why. Report the status instead.
+      console.warn('Google Places search failed with status ' + status);
     }
   }
 
