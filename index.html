@@ -55,7 +55,12 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
   <!-- https, not http: a page served over https blocks a plain-http script as
        mixed content, so uncommenting the old line left initializeMap() in
        helper.js silently never running, with nothing on the page to say why. -->
-  <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script> -->
+  <!-- The Maps JavaScript API refuses to load without an API key (the map
+       shows "MissingKeyMapError"), so put yours in place of YOUR_API_KEY.
+       The key is visible to anyone who views the page source: in the Google
+       Cloud console restrict it to your site's HTTP referrers and to the Maps
+       JavaScript and Places APIs, or anyone can spend your quota with it. -->
+  <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script> -->
 
   <meta name="viewport" content="width=device-width">
 </head>
