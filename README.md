@@ -7,7 +7,7 @@
 
 ### By the end:
 Your resume will look something like this
-![](http://i.imgur.com/pWU1Xbl.png)
+![](https://i.imgur.com/pWU1Xbl.png)
 
 And your repository will include the following files:
 
@@ -29,7 +29,7 @@ Each string has a title that describes how it should be used. For instance, `HTM
 ### Your process:
 The resume has four distinct sections: work, education, projects and a header with biographical information. You’ll need to:
 
-1. Build four JSONs, each one representing a different resume section. The objects that you create need to follow the names within the schema below exactly. Make sure your JSONs are formatted correctly using <a href="http://jsonlint.com/" target="_blank">JSONlint.com</a>.
+1. Build four JSONs, each one representing a different resume section. The objects that you create need to follow the names within the schema below exactly. Make sure your JSONs are formatted correctly using <a href="https://jsonlint.com/" target="_blank" rel="noopener noreferrer">JSONlint.com</a>.
 
 * `bio` contains:
         
@@ -89,7 +89,7 @@ The resume has four distinct sections: work, education, projects and a header wi
    * `var formattedLocation = HTMLworkLocation.replace("%data%", work.jobs[job].location);`
    * `$(".work-entry:last").append(formattedLocation);`
  * Use the mockup at the page of this document as a guide for the order in which you should append elements to the page.
-3. The resume includes an interactive map. To add it, append the googleMap string to `<div id=”mapDiv”>`.
+3. The resume includes an interactive map. To add it, append the googleMap string to `<div id=”mapDiv”>`, uncomment the Google Maps `<script>` in index.html (it needs your own API key, see the comment there) and the `window.addEventListener('load', initializeMap)` line at the end of helper.js.
 4. All of your code for adding elements to the resume should be within functions. And all of your functions should be encapsulated within the same objects containing your resume data. For instance, your functions for appending work experience elements to the page should be found within the same object containing data about your work experience.
-5. Your resume should also `console.log()` information about click locations. On line 90 in helper.js, you’ll find a jQuery onclick handler that you’ll need to modify to work with the `logClicks(x,y)` function above it.
-6. It’s possible to make additional information show up when you click on the pins in the map. Check out line 174 in helper.js and the Google Maps API to get started.
+5. Your resume should also `console.log()` information about click locations. In helper.js, you’ll find a jQuery onclick handler (`$(document).click(...)`) that you’ll need to modify to work with the `logClicks(x,y)` function above it.
+6. It’s possible to make additional information show up when you click on the pins in the map. Check out the `google.maps.event.addListener(marker, 'click', ...)` call in `createMapMarker()` in helper.js and the Google Maps API to get started.

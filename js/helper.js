@@ -64,8 +64,20 @@ The International Name challenge in Lesson 2 where you'll create a function that
 */
 $(document).ready(function() {
   $('button').click(function() {
-    var iName = inName() || function(){};
-    $('#name').html(iName);  
+    // inName() is the function you write for the challenge. Until it exists,
+    // clicking the button threw a ReferenceError; say what is missing instead.
+    if (typeof inName !== 'function') {
+      console.log('Write an inName() function in resumeBuilder.js for the Internationalize button.');
+      return;
+    }
+
+    // .text(), not .html(): the name is plain text. With .html() a name
+    // containing "<" or "&" was parsed as markup, and a name coming from
+    // somewhere you don't control (a prompt(), a URL) could inject script.
+    var iName = inName();
+    if (iName) {
+      $('#name').text(iName);
+    }
   });
 });
 
