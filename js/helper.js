@@ -55,7 +55,7 @@ var HTMLonlineSchool = ' - %data%</a>';
 var HTMLonlineDates = '<div class="date-text">%data%</div>';
 var HTMLonlineURL = '<br><a href="#">%data%</a>';
 
-var internationalizeButton = '<button>Internationalize</button>';
+var internationalizeButton = '<button class="internationalize">Internationalize</button>';
 var googleMap = '<div id="map"></div>';
 
 
@@ -66,7 +66,7 @@ The International Name challenge in Lesson 2 where you'll create a function that
 // ready time: that only reached buttons already in the page at that moment, so
 // a button your code appends later (after a fetch, from a click...) did nothing.
 $(document).ready(function() {
-  $(document).on('click', 'button', function() {
+  $(document).on('click', 'button.internationalize', function() {
     // inName() is the function you write for the challenge. Until it exists,
     // clicking the button threw a ReferenceError; say what is missing instead.
     if (typeof inName !== 'function') {
@@ -158,13 +158,13 @@ function initializeMap() {
     // whole map from loading. `typeof` checks without throwing.
 
     // adds the single location property from bio to the locations array
-    if (typeof bio !== 'undefined' && bio.contacts) {
+    if (typeof bio !== 'undefined' && bio && bio.contacts) {
       addLocation(bio.contacts.location);
     }
 
     // iterates through school locations and appends each location to
     // the locations array
-    if (typeof education !== 'undefined' && Array.isArray(education.schools)) {
+    if (typeof education !== 'undefined' && education && Array.isArray(education.schools)) {
       education.schools.forEach(function(school) {
         addLocation(school.location);
       });
@@ -172,7 +172,7 @@ function initializeMap() {
 
     // iterates through work locations and appends each location to
     // the locations array
-    if (typeof work !== 'undefined' && Array.isArray(work.jobs)) {
+    if (typeof work !== 'undefined' && work && Array.isArray(work.jobs)) {
       work.jobs.forEach(function(job) {
         addLocation(job.location);
       });
