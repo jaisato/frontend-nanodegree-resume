@@ -55,15 +55,18 @@ var HTMLonlineSchool = ' - %data%</a>';
 var HTMLonlineDates = '<div class="date-text">%data%</div>';
 var HTMLonlineURL = '<br><a href="#">%data%</a>';
 
-var internationalizeButton = '<button>Internationalize</button>';
+var internationalizeButton = '<button class="internationalize">Internationalize</button>';
 var googleMap = '<div id="map"></div>';
 
 
 /*
 The International Name challenge in Lesson 2 where you'll create a function that will need this helper code to run. Don't delete! It hooks up your code to the button you'll be appending.
 */
+// Delegated from the document rather than bound with $('button').click() at
+// ready time: that only reached buttons already in the page at that moment, so
+// a button your code appends later (after a fetch, from a click...) did nothing.
 $(document).ready(function() {
-  $('button').click(function() {
+  $(document).on('click', 'button.internationalize', function() {
     // inName() is the function you write for the challenge. Until it exists,
     // clicking the button threw a ReferenceError; say what is missing instead.
     if (typeof inName !== 'function') {
@@ -135,19 +138,44 @@ function initializeMap() {
     // initializes an empty array
     var locations = [];
 
+    // Adds a location once, and only if there is one to search for. A blank or
+    // missing location used to go to the Places API as `query: undefined`
+    // (answered INVALID_REQUEST), and a city repeated across jobs and schools
+    // was searched once per entry - each one a billed request and one more
+    // identical pin stacked on the same spot.
+    function addLocation(location) {
+      if (typeof location !== 'string') {
+        return;
+      }
+      location = location.trim();
+      if (location !== '' && locations.indexOf(location) === -1) {
+        locations.push(location);
+      }
+    }
+
+    // The objects are yours to write in resumeBuilder.js, and until all three
+    // exist, referring to a missing one threw a ReferenceError that stopped the
+    // whole map from loading. `typeof` checks without throwing.
+
     // adds the single location property from bio to the locations array
-    locations.push(bio.contacts.location);
+    if (typeof bio !== 'undefined' && bio && bio.contacts) {
+      addLocation(bio.contacts.location);
+    }
 
     // iterates through school locations and appends each location to
     // the locations array
-    for (var school in education.schools) {
-      locations.push(education.schools[school].location);
+    if (typeof education !== 'undefined' && education && Array.isArray(education.schools)) {
+      education.schools.forEach(function(school) {
+        addLocation(school.location);
+      });
     }
 
     // iterates through work locations and appends each location to
     // the locations array
-    for (var job in work.jobs) {
-      locations.push(work.jobs[job].location);
+    if (typeof work !== 'undefined' && work && Array.isArray(work.jobs)) {
+      work.jobs.forEach(function(job) {
+        addLocation(job.location);
+      });
     }
 
     return locations;
@@ -220,11 +248,11 @@ function initializeMap() {
     var service = new google.maps.places.PlacesService(map);
 
     // Iterates through the array of locations, creates a search object for each location
-    for (var place in locations) {
+    for (var i = 0; i < locations.length; i++) {
 
       // the search request object
       var request = {
-        query: locations[place]
+        query: locations[i]
       };
 
       // Actually searches the Google Maps API for location data and runs the callback
