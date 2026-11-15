@@ -128,7 +128,11 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
     */
 
 
-    if(document.getElementsByClassName('flex-item').length === 0) {
+    // Each contact block counts only the entries inside it. The skills are
+    // .flex-item too, so counting them page-wide left an empty contact bar and
+    // an empty "Let's Connect" footer on screen for a resume with skills but no
+    // contacts.
+    if(document.querySelectorAll('#topContacts .flex-item').length === 0) {
       document.getElementById('topContacts').style.display = 'none';
     }
     if(document.getElementsByTagName('h1').length === 0) {
@@ -143,7 +147,7 @@ need to load. You'll see a lot of <link>s to CSS files for styles and
     if(document.getElementsByClassName('education-entry').length === 0) {
       document.getElementById('education').style.display = 'none';
     }
-    if(document.getElementsByClassName('flex-item').length === 0) {
+    if(document.querySelectorAll('#letsConnect .flex-item').length === 0) {
       document.getElementById('letsConnect').style.display = 'none';
     }
     if(document.getElementById('map') === null) {
